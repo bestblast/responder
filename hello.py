@@ -1,3 +1,9 @@
+from config import API_PASS
+from config import API_URL
+from config import API_LOGIN
+
+print API_LOGIN + API_PASS + API_URL
+
 try:
     import ssl
 except ImportError:
@@ -12,8 +18,8 @@ from flask import Flask, request,jsonify
 app = Flask(__name__)
 
 jsonData = '''{
-   "phone_number": 380952822436,
-   "callback_url": "http://54.194.122.96:8880",
+   "phone_number": PHONE_NUMBER,
+   "callback_url": CALLBACK_URL,
    "tag": "Campaign name",
    "channels": [ "viber"],
    "channel_options": {
@@ -30,7 +36,7 @@ headers = {'Content-Type': 'application/json'}
 
 
 @app.route('/', methods=['GET', 'POST'])
-def helloPOST():
+def hello_post():
     return "Hello World!"
 
 @app.route("/reply", methods=['GET','POST'])
@@ -41,11 +47,10 @@ def reply():
 
     if request.json:
         mydata = request.json # will be 
-	reply = mydata.get("text_from_subscriber")
-	print reply
-	r = requests.post('https://api-v2.hyber.im/5',headers=headers, auth=HTTPBasicAuth('apilogin','apipass1'), data=jsonData)
-	print r.status_code
-
+        reply = mydata.get("text_from_subscriber")
+        print reply
+        r = requests.post(API_URL,headers=headers, auth=HTTPBasicAuth(API_LOGIN, API_PASS), data=jsonData)
+        print r.status_code
         return "Thanks. Your message is %s" % reply
 
     else:
