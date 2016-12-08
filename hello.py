@@ -15,9 +15,10 @@ from requests.auth import HTTPBasicAuth
 from flask import Flask, request,jsonify
 app = Flask(__name__)
 
-jsonData = '{\
+def jsonData(subscriber):
+    resp = '{\
    "phone_number": %s,\
-   "callback_url": %s,\
+   "callback_url": \"%s\",\
    "tag": "Campaign name",\
    "channels": [ "viber"],\
    "channel_options": {\
@@ -28,7 +29,11 @@ jsonData = '{\
       }\
    }\
 }\
-' % (PHONE_NUMBER, CALLBACK_URL)
+' % (subscriber, CALLBACK_URL)
+    return resp
+
+
+
 
 headers = {'Content-Type': 'application/json'}
 
@@ -46,9 +51,12 @@ def reply():
     if request.json:
         mydata = request.json # will be 
         reply = mydata.get("text_from_subscriber")
+        subscriber = mydata.get("phone").split("+")[1]
         print reply
-        r = requests.post(API_URL,headers=headers, auth=HTTPBasicAuth(API_LOGIN, API_PASS), data=jsonData)
-        print r.status_code
+        print subscriber
+        r = requests.post(API_URL,headers=headers, auth=HTTPBasicAuth(API_LOGIN, API_PASS), data=jsonData(subscriber))
+        print jsonData(subscriber)
+	print r.status_code
         print r.text
         return "Thanks. Your message is %s" % reply
 
