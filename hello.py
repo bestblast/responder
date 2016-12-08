@@ -1,6 +1,4 @@
-from config import API_PASS
-from config import API_URL
-from config import API_LOGIN, CALLBACK_URL, PHONE_NUMBER
+from config import API_URL, API_LOGIN,API_PASS, CALLBACK_URL, PHONE_NUMBER
 
 print API_LOGIN + API_PASS + API_URL
 
@@ -17,20 +15,20 @@ from requests.auth import HTTPBasicAuth
 from flask import Flask, request,jsonify
 app = Flask(__name__)
 
-jsonData = ('{\n'
-            '   "phone_number": {},\n'
-            '   "callback_url": {},\n'
-            '   "tag": "Campaign name",\n'
-            '   "channels": [ "viber"],\n'
-            '   "channel_options": {\n'
-            '      "viber": {\n'
-            '         "ttl": 900,\n'
-            '         "img": "http://combiboilersleeds.com/images/picture/picture-0.jpg",\n'
-            '         "ios_expirity_text": "Text for ios when message expires"\n'
-            '      }\n'
-            '   }\n'
-            '}\n'
-).format(PHONE_NUMBER,CALLBACK_URL)
+jsonData = '{\
+   "phone_number": %s,\
+   "callback_url": %s,\
+   "tag": "Campaign name",\
+   "channels": [ "viber"],\
+   "channel_options": {\
+      "viber": {\
+         "ttl": 900,\
+         "img": "http://combiboilersleeds.com/images/picture/picture-0.jpg",\
+         "ios_expirity_text": "Text for ios when message expires"\
+      }\
+   }\
+}\
+' % (PHONE_NUMBER, CALLBACK_URL)
 
 headers = {'Content-Type': 'application/json'}
 
