@@ -51,6 +51,7 @@ def reply():
         print reply
         r = requests.post(API_URL,headers=headers, auth=HTTPBasicAuth(API_LOGIN, API_PASS), data=jsonData)
         print r.status_code
+        print r.raw
         return "Thanks. Your message is %s" % reply
 
     else:
