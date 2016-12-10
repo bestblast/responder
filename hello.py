@@ -1,6 +1,4 @@
-from config import API_URL, API_LOGIN,API_PASS, CALLBACK_URL, PHONE_NUMBER
-
-print API_LOGIN + API_PASS + API_URL
+from config import API_URL, API_LOGIN,API_PASS, CALLBACK_URL
 
 try:
     import ssl
