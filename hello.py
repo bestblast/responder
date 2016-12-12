@@ -13,6 +13,8 @@ from requests.auth import HTTPBasicAuth
 from flask import Flask, request,jsonify
 app = Flask(__name__)
 
+from google_get_url import *
+
 def jsonData(subscriber):
     resp = '{\
    "phone_number": %s,\
@@ -22,16 +24,13 @@ def jsonData(subscriber):
    "channel_options": {\
       "viber": {\
          "ttl": 900,\
-         "img": "http://combiboilersleeds.com/images/picture/picture-0.jpg",\
+         "img": \"%s\",\
          "ios_expirity_text": "Text for ios when message expires"\
       }\
    }\
 }\
-' % (subscriber, CALLBACK_URL)
+' % (subscriber, CALLBACK_URL, get_url_from_query("parrot"))
     return resp
-
-
-
 
 headers = {'Content-Type': 'application/json'}
 
