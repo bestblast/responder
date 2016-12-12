@@ -52,7 +52,7 @@ def reply():
         text_query = reply
 	print reply
         print subscriber
-        r = requests.post(API_URL,headers=headers, auth=HTTPBasicAuth(API_LOGIN, API_PASS), data=jsonData(subscriber))
+        r = requests.post(API_URL,headers=headers, auth=HTTPBasicAuth(API_LOGIN, API_PASS), data=jsonData(subscriber,reply))
         print jsonData(subscriber,text_query)
 	print r.status_code
         print r.text
