@@ -15,7 +15,7 @@ app = Flask(__name__)
 
 from google_get_url import *
 
-def jsonData(subscriber):
+def jsonData(subscriber,text_query):
     resp = '{\
    "phone_number": %s,\
    "callback_url": \"%s\",\
@@ -29,7 +29,7 @@ def jsonData(subscriber):
       }\
    }\
 }\
-' % (subscriber, CALLBACK_URL, get_url_from_query("parrot"))
+' % (subscriber, CALLBACK_URL, get_url_from_query(text_query)
     return resp
 
 headers = {'Content-Type': 'application/json'}
@@ -49,10 +49,11 @@ def reply():
         mydata = request.json # will be 
         reply = mydata.get("text_from_subscriber")
         subscriber = mydata.get("phone").split("+")[1]
-        print reply
+        text_query = reply
+	print reply
         print subscriber
         r = requests.post(API_URL,headers=headers, auth=HTTPBasicAuth(API_LOGIN, API_PASS), data=jsonData(subscriber))
-        print jsonData(subscriber)
+        print jsonData(subscriber,text_query)
 	print r.status_code
         print r.text
         return "Thanks. Your message is %s" % reply
