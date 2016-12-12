@@ -29,7 +29,7 @@ def jsonData(subscriber,text_query):
       }\
    }\
 }\
-' % (subscriber, CALLBACK_URL, get_url_from_query(text_query)
+' % (subscriber, CALLBACK_URL, get_url_from_query(text_query))
     return resp
 
 headers = {'Content-Type': 'application/json'}
