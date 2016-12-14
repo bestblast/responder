@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from config import API_URL, API_LOGIN,API_PASS, CALLBACK_URL
 
 try:
@@ -9,7 +11,7 @@ except ImportError:
     ssl = _SslDummy()
 import requests
 from requests.auth import HTTPBasicAuth
-
+from flask import Response
 from flask import Flask, request,jsonify
 app = Flask(__name__)
 
@@ -37,14 +39,14 @@ headers = {'Content-Type': 'application/json'}
 
 @app.route('/', methods=['GET', 'POST'])
 def hello_post():
+    json = request.json
+    print(json)
     return "Hello World!"
 
 @app.route("/reply", methods=['GET','POST'])
 def reply():
-
     app.logger.debug("JSON received...")
     app.logger.debug(request.json)
-
     if request.json:
         mydata = request.json # will be 
         reply = mydata.get("text_from_subscriber")
@@ -57,7 +59,6 @@ def reply():
 	print r.status_code
         print r.text
         return "Thanks. Your message is %s" % reply
-
     else:
         return "no json received"
 
@@ -89,7 +90,7 @@ def hello():
     return "Hello World!"
 
 if __name__ == "__main__":
-    app.run(host="172.31.21.183", debug=True)
+    app.run(host="172.31.21.183", port=8880, debug=True)
 #    app.run(host="172.31.21.183",debug=True, port=5000, ssl_context='adhoc')
 
 

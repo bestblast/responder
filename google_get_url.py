@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import shutil
 from bs4 import BeautifulSoup
 from random import choice
@@ -6,7 +7,8 @@ import re
 import urllib2
 import os
 import cookielib
-import json
+import json,random
+
 
 def get_soup(url,header):
     return BeautifulSoup(urllib2.urlopen(urllib2.Request(url,headers=header)),'html.parser')
@@ -17,7 +19,7 @@ def get_url_from_query(query):
     image_type="ActiOn"
     query= query.split()
     query='+'.join(query)
-    url="https://www.google.co.in/search?q="+query+"&source=lnms&tbm=isch"
+    url="https://www.google.co.in/search?q="+query+"&source=lnms&tbm=isch&tbs=isz:m"
     print url
     #add the directory for your image here
     DIR="Pictures_g_search"
@@ -33,19 +35,31 @@ def get_url_from_query(query):
 
     print  "there are total" , len(ActualImages),"images"
 
-    if not os.path.exists(DIR):
-        os.mkdir(DIR)
-    DIR = os.path.join(DIR, query.split()[0])
+    #if not os.path.exists(DIR):
+    #    os.mkdir(DIR)
+    #DIR = os.path.join(DIR, query.split()[0])
 
-    if not os.path.exists(DIR):
-        os.mkdir(DIR)
+    #if not os.path.exists(DIR):
+    #    os.mkdir(DIR)
+##############
+    img_links=[]
+###print images
+    for i , (img , Type) in enumerate( ActualImages):
+        img_links.append(img)
+        i=i+1
+
+    return random.choice(img_links)
+
+##############
+'''
+
     ###print images
     list_img = []
     for i , (img , Type) in enumerate( ActualImages):
         try:
             req = urllib2.Request(img, headers={'User-Agent' : header})
             raw_img = urllib2.urlopen(req).read()
-            print img
+     #       print img
             list_img.append(str(img))
             #	print req
             #	print list_img
@@ -67,11 +81,10 @@ def get_url_from_query(query):
             print e
             list_img.pop()
     shutil.rmtree(DIR)
-    print list_img
+    #print list_img
     return choice(list_img)
 
-
-
+'''
 
 
 
