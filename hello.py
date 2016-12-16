@@ -11,7 +11,7 @@ except ImportError:
     ssl = _SslDummy()
 import requests
 from requests.auth import HTTPBasicAuth
-from flask import Response
+from flask import Response,render_template
 from flask import Flask, request,jsonify
 app = Flask(__name__)
 
@@ -49,7 +49,7 @@ def reply():
     app.logger.debug(request.json)
     if request.json:
         mydata = request.json # will be 
-        reply = mydata.get("text_from_subscriber")
+        reply = mydata.get("text_from_subscriber").encode('utf-8')
         subscriber = mydata.get("phone").split("+")[1]
         text_query = reply
 	print reply
@@ -87,6 +87,7 @@ def add_message(uuid):
 
 @app.route("/a")
 def hello():
+    return render_template('index.html')
     return "Hello World!"
 
 if __name__ == "__main__":
