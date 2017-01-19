@@ -50,7 +50,7 @@ def reply():
     if request.json:
         mydata = request.json # will be 
         reply = mydata.get("text_from_subscriber").encode('utf-8')
-        subscriber = mydata.get("phone").split("+")[1]
+        subscriber = mydata.get("phone")#.split("+")[1]
         text_query = reply
 	print reply
         print subscriber
